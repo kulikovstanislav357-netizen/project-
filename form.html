@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зелёный уголок - Подбор</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header-panel">
+        Зелёный уголок · V17
+    </header>
+
+    <nav class="nav-tabs">
+        <a href="index.html" class="nav-btn">Главная</a>
+        <a href="catalog.html" class="nav-btn">Каталог</a>
+        <a href="form.html" class="nav-btn active">Форма</a>
+    </nav>
+
+    <main class="screen page">
+        <h2>Подбор растения</h2>
+        <p class="subtitle">Учебная форма. Данные пока не сохраняются.</p>
+
+        <form method="get" class="request-form">
+            <div class="form-group">
+                <label for="quantity">Количество растений</label>
+                <input type="number" id="quantity" name="quantity" value="3" min="1" step="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="item">Название растения</label>
+                <select id="item" name="item" required>
+                    <option value="">Выберите из списка</option>
+                    <option value="item1">Сансевиерия</option>
+                    <option value="item2">Фикус</option>
+                    <option value="item3">Монстера</option>
+                </select>
+            </div>
+
+            <div class="form-group range-container">
+                <label for="light">Освещённость окна</label>
+                <input type="range" id="light" name="light" min="1" max="5" value="3" class="range-slider">
+                <div class="range-labels">
+                    <span>1 — Тень</span>
+                    <span>5 — Свет</span>
+                </div>
+            </div>
+
+            <label class="checkbox-group">
+                <input type="checkbox" name="pot" checked>
+                <span>Нужен новый горшок</span>
+            </label>
+
+            <label class="checkbox-group">
+                <input type="checkbox" name="guide">
+                <span>Нужна памятка ухода</span>
+            </label>
+
+            <button type="submit" class="submit-btn">Оставить запрос</button>
+            <p id="result" role="status" aria-live="polite"></p>
+        </form>
+    </main>
+
+    <script src="form.js" defer></script>
+</body>
+</html>

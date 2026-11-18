@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зелёный уголок - Главная</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="catalog.js" defer></script>
+</head>
+<body>
+  <header class="header-panel">
+    Зелёный уголок · V17
+  </header>
+
+  <nav class="nav-tabs">
+    <a href="catalog.html" class="nav-btn">Каталог</a>
+    <a href="form.html" class="nav-btn">Форма</a>
+  </nav>
+
+  <main class="screen page">
+    <h2>Зелёный уголок — каталог комнатных растений</h2>
+    <p class="subtitle">Выберите зелёного соседа</p>
+
+    <!-- Элементы для выполнения задания -->
+    <p id="status" role="status" class="subtitle"></p>
+    <div style="margin-bottom: 20px;">
+      <button id="show-names" type="button" class="nav-btn">Показать названия</button>
+      <ul id="names" style="margin-top: 15px; padding-left: 20px;"></ul>
+    </div>
+
+    <div class="plant-image-container">
+      <img src="images/item1.png" alt="Растение" class="plant-img">
+    </div>
+
+    <p class="subtitle">Три предложения для выбора. Выберите зелёного соседа.</p>
+
+    <div style="display: flex; gap: 15px;">
+      <a href="catalog.html" class="link-action">Открыть каталог</a>
+      <a href="form.html" class="link-action">Оставить запрос</a>
+    </div>
+
+    <footer class="footer-note">
+      Учебный прототип · Вариант 17
+    </footer>
+  </main>
+</body>
+</html>
