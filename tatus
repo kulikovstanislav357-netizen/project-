@@ -1,0 +1,704 @@
+[1mdiff --git a/catalog-page.js b/catalog-page.js[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8b264b7[m
+[1m--- /dev/null[m
+[1m+++ b/catalog-page.js[m
+[36m@@ -0,0 +1,69 @@[m
+[32m+[m[32mconst catalog = [[m
+[32m+[m[32m  {[m
+[32m+[m[32m    position: 1,[m
+[32m+[m[32m    name: "Хлорофитум",[m
+[32m+[m[32m    specs: "Высота 25 см · рассеянный свет",[m
+[32m+[m[32m    description: "Лёгкие листья для подвесной полки"[m
+[32m+[m[32m  },[m
+[32m+[m[32m  {[m
+[32m+[m[32m    position: 2,[m
+[32m+[m[32m    name: "Фикус",[m
+[32m+[m[32m    specs: "Высота 40 см · яркий свет",[m
+[32m+[m[32m    description: "Зелёные листья для просторного места"[m
+[32m+[m[32m  },[m
+[32m+[m[32m  {[m
+[32m+[m[32m    position: 3,[m
+[32m+[m[32m    name: "Сансевиерия",[m
+[32m+[m[32m    specs: "Высота 30 см · полутень",[m
+[32m+[m[32m    description: "Компактное растение для рабочего стола"[m
+[32m+[m[32m  }[m
+[32m+[m[32m];[m
+[32m+[m
+[32m+[m[32mfunction filterByText(items, query) {[m
+[32m+[m[32m  const normalized = String(query).trim().toLowerCase();[m
+[32m+[m[32m  if (normalized === "") {[m
+[32m+[m[32m    return items;[m
+[32m+[m[32m  }[m
+[32m+[m[32m  return items.filter(item => item.name.toLowerCase().includes(normalized));[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mconst catalogList = document.querySelector("#catalog-list");[m
+[32m+[m[32mconst statusText = document.querySelector("#status");[m
+[32m+[m
+[32m+[m[32mfunction renderCatalog(items) {[m
+[32m+[m[32m  catalogList.replaceChildren();[m
+[32m+[m
+[32m+[m[32m  for (const item of items) {[m
+[32m+[m[32m    const card = document.createElement("article");[m
+[32m+[m[32m    card.className = "card";[m
+[32m+[m
+[32m+[m[32m    const title = document.createElement("h2");[m
+[32m+[m[32m    title.textContent = item.name;[m
+[32m+[m
+[32m+[m[32m    const specs = document.createElement("p");[m
+[32m+[m[32m    specs.className = "info-tag";[m
+[32m+[m[32m    specs.textContent = item.specs;[m
+[32m+[m
+[32m+[m[32m    const description = document.createElement("p");[m
+[32m+[m[32m    description.className = "description-tag";[m
+[32m+[m[32m    description.textContent = item.description;[m
+[32m+[m
+[32m+[m[32m    card.append(title, specs, description);[m
+[32m+[m[32m    catalogList.append(card);[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  if (items.length === 0) {[m
+[32m+[m[32m    statusText.textContent = "Ничего не найдено";[m
+[32m+[m[32m  } else {[m
+[32m+[m[32m    statusText.textContent = "Показано: " + items.length + " из " + catalog.length;[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mrenderCatalog(catalog);[m
+[32m+[m
+[32m+[m[32mconst searchInput = document.querySelector("#search");[m
+[32m+[m
+[32m+[m[32msearchInput.addEventListener("input", function () {[m
+[32m+[m[32m  const found = filterByText(catalog, searchInput.value);[m
+[32m+[m[32m  renderCatalog(found);[m
+[32m+[m[32m});[m
+[1mdiff --git a/catalog.html b/catalog.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..263cc45[m
+[1m--- /dev/null[m
+[1m+++ b/catalog.html[m
+[36m@@ -0,0 +1,38 @@[m
+[32m+[m[32m<!DOCTYPE html>[m
+[32m+[m[32m<html lang="ru">[m
+[32m+[m[32m<head>[m
+[32m+[m[32m  <meta charset="UTF-8">[m
+[32m+[m[32m  <meta name="viewport" content="width=device-width, initial-scale=1.0">[m
+[32m+[m[32m  <title>Зелёный уголок - Каталог</title>[m
+[32m+[m[32m  <link rel="stylesheet" href="style.css">[m
+[32m+[m[32m</head>[m
+[32m+[m[32m<body>[m
+[32m+[m[32m  <header class="header-panel">[m
+[32m+[m[32m    Зелёный уголок · V17[m
+[32m+[m[32m  </header>[m
+[32m+[m
+[32m+[m[32m  <nav class="nav-tabs">[m
+[32m+[m[32m    <a href="index.html" class="nav-btn">Главная</a>[m
+[32m+[m[32m    <a href="catalog.html" class="nav-btn active">Каталог</a>[m
+[32m+[m[32m    <a href="form.html" class="nav-btn">Форма</a>[m
+[32m+[m[32m  </nav>[m
+[32m+[m
+[32m+[m[32m  <main class="screen page">[m
+[32m+[m[32m    <h2>Каталог растений</h2>[m
+[32m+[m[32m    <p class="subtitle">Выберите одну из трёх позиций</p>[m
+[32m+[m
+[32m+[m[32m    <p>[m
+[32m+[m[32m      <label for="search">Поиск по названию</label>[m
+[32m+[m[32m      <input id="search" type="search" placeholder="Введите часть названия">[m
+[32m+[m[32m    </p>[m
+[32m+[m[32m    <div id="catalog-list" class="products"></div>[m
+[32m+[m[32m    <p id="status" role="status"></p>[m
+[32m+[m
+[32m+[m[32m    <footer class="footer-note">[m
+[32m+[m[32m      Учебный прототип · Вариант 17[m
+[32m+[m[32m    </footer>[m
+[32m+[m[32m  </main>[m
+[32m+[m
+[32m+[m[32m  <script src="catalog-page.js" defer></script>[m
+[32m+[m[32m</body>[m
+[32m+[m[32m</html>[m
+[1mdiff --git a/catalog.js b/catalog.js[m
+[1mnew file mode 100644[m
+[1mindex 0000000..eb7727c[m
+[1m--- /dev/null[m
+[1m+++ b/catalog.js[m
+[36m@@ -0,0 +1,67 @@[m
+[32m+[m[32mconst catalog = [[m
+[32m+[m[32m  {[m
+[32m+[m[32m    position: 1,[m
+[32m+[m[32m    name: "Хлорофитум",[m
+[32m+[m[32m    specs: "Высота 25 см · рассеянный свет",[m
+[32m+[m[32m    description: "Лёгкие листья для подвесной полки"[m
+[32m+[m[32m  },[m
+[32m+[m[32m  {[m
+[32m+[m[32m    position: 2,[m
+[32m+[m[32m    name: "Фикус",[m
+[32m+[m[32m    specs: "Высота 40 см · яркий свет",[m
+[32m+[m[32m    description: "Зелёные листья для просторного места"[m
+[32m+[m[32m  },[m
+[32m+[m[32m  {[m
+[32m+[m[32m    position: 3,[m
+[32m+[m[32m    name: "Сансевиерия",[m
+[32m+[m[32m    specs: "Высота 30 см · полутень",[m
+[32m+[m[32m    description: "Компактное растение для рабочего стола"[m
+[32m+[m[32m  }[m
+[32m+[m[32m];[m
+[32m+[m
+[32m+[m[32mfunction getResult(item, count = 1) {[m
+[32m+[m[32m  if (!item) {[m
+[32m+[m[32m    return "Запись не найдена";[m
+[32m+[m[32m  }[m
+[32m+[m[32m  return `Выбрано: ${item.name} (${count} шт.) — ${item.specs}`;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfunction filterByText(items, query) {[m
+[32m+[m[32m  const normalized = String(query).trim().toLowerCase();[m
+[32m+[m[32m  if (normalized === "") {[m
+[32m+[m[32m    return items;[m
+[32m+[m[32m  }[m
+[32m+[m[32m  return items.filter(item => item.name.toLowerCase().includes(normalized));[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfunction findByPosition(items, position) {[m
+[32m+[m[32m  return items.find(item => item.position === position);[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mconst status = document.querySelector("#status");[m
+[32m+[m[32mconst namesList = document.querySelector("#names");[m
+[32m+[m[32mconst showButton = document.querySelector("#show-names");[m
+[32m+[m
+[32m+[m[32mif (status && namesList) {[m
+[32m+[m[32m  const first = catalog[0].name;[m
+[32m+[m[32m  status.textContent = first + " — " + catalog.length + " записей";[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfunction renderNames() {[m
+[32m+[m[32m  if (!namesList) return;[m
+[32m+[m[32m  namesList.replaceChildren();[m
+[32m+[m[32m  for (const item of catalog) {[m
+[32m+[m[32m    const line = document.createElement("li");[m
+[32m+[m[32m    line.textContent = item.name;[m
+[32m+[m[32m    namesList.append(line);[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mif (showButton) {[m
+[32m+[m[32m  showButton.addEventListener("click", function () {[m
+[32m+[m[32m    renderNames();[m
+[32m+[m[32m    if (status) {[m
+[32m+[m[32m      status.textContent = "Список показан";[m
+[32m+[m[32m    }[m
+[32m+[m[32m  });[m
+[32m+[m[32m}[m
+[1mdiff --git a/form.html b/form.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..4576e97[m
+[1m--- /dev/null[m
+[1m+++ b/form.html[m
+[36m@@ -0,0 +1,66 @@[m
+[32m+[m[32m<!DOCTYPE html>[m
+[32m+[m[32m<html lang="ru">[m
+[32m+[m[32m<head>[m
+[32m+[m[32m    <meta charset="UTF-8">[m
+[32m+[m[32m    <meta name="viewport" content="width=device-width, initial-scale=1.0">[m
+[32m+[m[32m    <title>Зелёный уголок - Подбор</title>[m
+[32m+[m[32m    <link rel="stylesheet" href="style.css">[m
+[32m+[m[32m</head>[m
+[32m+[m[32m<body>[m
+[32m+[m[32m    <header class="header-panel">[m
+[32m+[m[32m        Зелёный уголок · V17[m
+[32m+[m[32m    </header>[m
+[32m+[m
+[32m+[m[32m    <nav class="nav-tabs">[m
+[32m+[m[32m        <a href="index.html" class="nav-btn">Главная</a>[m
+[32m+[m[32m        <a href="catalog.html" class="nav-btn">Каталог</a>[m
+[32m+[m[32m        <a href="form.html" class="nav-btn active">Форма</a>[m
+[32m+[m[32m    </nav>[m
+[32m+[m
+[32m+[m[32m    <main class="screen page">[m
+[32m+[m[32m        <h2>Подбор растения</h2>[m
+[32m+[m[32m        <p class="subtitle">Учебная форма. Данные пока не сохраняются.</p>[m
+[32m+[m
+[32m+[m[32m        <form method="get" class="request-form">[m
+[32m+[m[32m            <div class="form-group">[m
+[32m+[m[32m                <label for="quantity">Количество растений</label>[m
+[32m+[m[32m                <input type="number" id="quantity" name="quantity" value="3" min="1" step="1" required>[m
+[32m+[m[32m            </div>[m
+[32m+[m
+[32m+[m[32m            <div class="form-group">[m
+[32m+[m[32m                <label for="item">Название растения</label>[m
+[32m+[m[32m                <select id="item" name="item" required>[m
+[32m+[m[32m                    <option value="">Выберите из списка</option>[m
+[32m+[m[32m                    <option value="item1">Сансевиерия</option>[m
+[32m+[m[32m                    <option value="item2">Фикус</option>[m
+[32m+[m[32m                    <option value="item3">Монстера</option>[m
+[32m+[m[32m                </select>[m
+[32m+[m[32m            </div>[m
+[32m+[m
+[32m+[m[32m            <div class="form-group range-container">[m
+[32m+[m[32m                <label for="light">Освещённость окна</label>[m
+[32m+[m[32m                <input type="range" id="light" name="light" min="1" max="5" value="3" class="range-slider">[m
+[32m+[m[32m                <div class="range-labels">[m
+[32m+[m[32m                    <span>1 — Тень</span>[m
+[32m+[m[32m                    <span>5 — Свет</span>[m
+[32m+[m[32m                </div>[m
+[32m+[m[32m            </div>[m
+[32m+[m
+[32m+[m[32m            <label class="checkbox-group">[m
+[32m+[m[32m                <input type="checkbox" name="pot" checked>[m
+[32m+[m[32m                <span>Нужен новый горшок</span>[m
+[32m+[m[32m            </label>[m
+[32m+[m
+[32m+[m[32m            <label class="checkbox-group">[m
+[32m+[m[32m                <input type="checkbox" name="guide">[m
+[32m+[m[32m                <span>Нужна памятка ухода</span>[m
+[32m+[m[32m            </label>[m
+[32m+[m
+[32m+[m[32m            <button type="submit" class="submit-btn">Оставить запрос</button>[m
+[32m+[m[32m            <p id="result" role="status" aria-live="polite"></p>[m
+[32m+[m[32m        </form>[m
+[32m+[m[32m    </main>[m
+[32m+[m
+[32m+[m[32m    <script src="form.js" defer></script>[m
+[32m+[m[32m</body>[m
+[32m+[m[32m</html>[m
+[1mdiff --git a/form.js b/form.js[m
+[1mnew file mode 100644[m
+[1mindex 0000000..43b9ebc[m
+[1m--- /dev/null[m
+[1m+++ b/form.js[m
+[36m@@ -0,0 +1,37 @@[m
+[32m+[m[32mconst unitValue = 500;[m
+[32m+[m[32mconst extraValue = 150;[m
+[32m+[m
+[32m+[m[32mfunction getResult(quantityText, unitValue, extraValue) {[m
+[32m+[m[32m  const cleaned = String(quantityText).trim();[m
+[32m+[m
+[32m+[m[32m  if (cleaned === "") {[m
+[32m+[m[32m    return "Укажите количество";[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  const quantity = Number(cleaned);[m
+[32m+[m
+[32m+[m[32m  if (Number.isNaN(quantity)) {[m
+[32m+[m[32m    return "Введите число";[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  if (!Number.isInteger(quantity) || quantity < 1) {[m
+[32m+[m[32m    return "Количество должно быть целым числом от 1";[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  const total = quantity * unitValue + extraValue;[m
+[32m+[m[32m  return "Итого: " + total + " руб.";[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mconst form = document.querySelector("form");[m
+[32m+[m[32mconst result = document.querySelector("#result");[m
+[32m+[m
+[32m+[m[32mform.addEventListener("submit", function (event) {[m
+[32m+[m[32m  event.preventDefault();[m
+[32m+[m
+[32m+[m[32m  const quantityText = document.querySelector("#quantity").value;[m
+[32m+[m[32m  const select = document.querySelector("#item");[m
+[32m+[m[32m  const itemName = select.options[select.selectedIndex].text;[m
+[32m+[m
+[32m+[m[32m  const message = getResult(quantityText, unitValue, extraValue);[m
+[32m+[m[32m  result.textContent = itemName + ". " + message;[m
+[32m+[m[32m});[m
+[1mdiff --git a/images/item1.png b/images/item1.png[m
+[1mnew file mode 100644[m
+[1mindex 0000000..769c1c5[m
+Binary files /dev/null and b/images/item1.png differ
+[1mdiff --git a/index.html b/index.html[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c0f8b16[m
+[1m--- /dev/null[m
+[1m+++ b/index.html[m
+[36m@@ -0,0 +1,47 @@[m
+[32m+[m[32m<!DOCTYPE html>[m
+[32m+[m[32m<html lang="ru">[m
+[32m+[m[32m<head>[m
+[32m+[m[32m  <meta charset="UTF-8">[m
+[32m+[m[32m  <meta name="viewport" content="width=device-width, initial-scale=1.0">[m
+[32m+[m[32m  <title>Зелёный уголок - Главная</title>[m
+[32m+[m[32m  <link rel="stylesheet" href="style.css">[m
+[32m+[m[32m  <script src="catalog.js" defer></script>[m
+[32m+[m[32m</head>[m
+[32m+[m[32m<body>[m
+[32m+[m[32m  <header class="header-panel">[m
+[32m+[m[32m    Зелёный уголок · V17[m
+[32m+[m[32m  </header>[m
+[32m+[m
+[32m+[m[32m  <nav class="nav-tabs">[m
+[32m+[m[32m    <a href="catalog.html" class="nav-btn">Каталог</a>[m
+[32m+[m[32m    <a href="form.html" class="nav-btn">Форма</a>[m
+[32m+[m[32m  </nav>[m
+[32m+[m
+[32m+[m[32m  <main class="screen page">[m
+[32m+[m[32m    <h2>Зелёный уголок — каталог комнатных растений</h2>[m
+[32m+[m[32m    <p class="subtitle">Выберите зелёного соседа</p>[m
+[32m+[m
+[32m+[m[32m    <!-- Элементы для выполнения задания -->[m
+[32m+[m[32m    <p id="status" role="status" class="subtitle"></p>[m
+[32m+[m[32m    <div style="margin-bottom: 20px;">[m
+[32m+[m[32m      <button id="show-names" type="button" class="nav-btn">Показать названия</button>[m
+[32m+[m[32m      <ul id="names" style="margin-top: 15px; padding-left: 20px;"></ul>[m
+[32m+[m[32m    </div>[m
+[32m+[m
+[32m+[m[32m    <div class="plant-image-container">[m
+[32m+[m[32m      <img src="images/item1.png" alt="Растение" class="plant-img">[m
+[32m+[m[32m    </div>[m
+[32m+[m
+[32m+[m[32m    <p class="subtitle">Три предложения для выбора. Выберите зелёного соседа.</p>[m
+[32m+[m
+[32m+[m[32m    <div style="display: flex; gap: 15px;">[m
+[32m+[m[32m      <a href="catalog.html" class="link-action">Открыть каталог</a>[m
+[32m+[m[32m      <a href="form.html" class="link-action">Оставить запрос</a>[m
+[32m+[m[32m    </div>[m
+[32m+[m
+[32m+[m[32m    <footer class="footer-note">[m
+[32m+[m[32m      Учебный прототип · Вариант 17[m
+[32m+[m[32m    </footer>[m
+[32m+[m[32m  </main>[m
+[32m+[m[32m</body>[m
+[32m+[m[32m</html>[m
+[1mdiff --git a/style.css b/style.css[m
+[1mnew file mode 100644[m
+[1mindex 0000000..65c9bfe[m
+[1m--- /dev/null[m
+[1m+++ b/style.css[m
+[36m@@ -0,0 +1,334 @@[m
+[32m+[m[32m:root {[m
+[32m+[m[32m    --primary-green: #2d7a34;[m
+[32m+[m[32m    --light-green: #eef7ee;[m
+[32m+[m[32m    --accent-yellow: #fff9db;[m
+[32m+[m[32m    --text-dark: #2c3e50;[m
+[32m+[m[32m    --border-color: #bdc3c7;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m* {[m
+[32m+[m[32m    box-sizing: border-box;[m
+[32m+[m[32m    margin: 0;[m
+[32m+[m[32m    padding: 0;[m
+[32m+[m[32m    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mimg {[m
+[32m+[m[32m    max-width: 100%;[m
+[32m+[m[32m    height: auto;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mbody {[m
+[32m+[m[32m    background-color: #f4f7f4;[m[41m [m
+[32m+[m[32m    color: var(--text-dark);[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    flex-direction: column;[m
+[32m+[m[32m    min-height: 100vh;[m
+[32m+[m[32m    overflow-wrap: anywhere;[m[41m [m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.header-panel {[m
+[32m+[m[32m    background-color: var(--primary-green);[m
+[32m+[m[32m    color: white;[m
+[32m+[m[32m    padding: 20px;[m
+[32m+[m[32m    font-weight: bold;[m
+[32m+[m[32m    font-size: 1.2rem;[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mnav {[m
+[32m+[m[32m  display: flex;[m
+[32m+[m[32m  flex-wrap: wrap;[m
+[32m+[m[32m  gap: 0.5rem;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mnav a {[m
+[32m+[m[32m  margin: 0;[m[41m [m
+[32m+[m[32m  max-width: 100%;[m[41m [m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.nav-tabs {[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    gap: 10px;[m
+[32m+[m[32m    padding: 20px;[m
+[32m+[m[32m    background: transparent;[m[41m [m
+[32m+[m[32m    max-width: 1200px;[m[41m [m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    margin: 0 auto;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.nav-btn {[m
+[32m+[m[32m    padding: 8px 24px;[m
+[32m+[m[32m    border: 1px solid var(--primary-green);[m
+[32m+[m[32m    background: #ffffff;[m[41m [m
+[32m+[m[32m    color: var(--primary-green);[m
+[32m+[m[32m    border-radius: 6px;[m
+[32m+[m[32m    cursor: pointer;[m
+[32m+[m[32m    font-size: 0.95rem;[m
+[32m+[m[32m    text-decoration: none;[m
+[32m+[m[32m    text-align: center;[m
+[32m+[m[32m    transition: all 0.2s;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.nav-btn.active, .nav-btn:hover {[m
+[32m+[m[32m    background-color: var(--light-green);[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.screen {[m
+[32m+[m[32m    padding: 20px;[m
+[32m+[m[32m    max-width: 1200px;[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    margin: 0 auto;[m[41m [m
+[32m+[m[32m    flex: 1;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mh2 {[m
+[32m+[m[32m    color: var(--primary-green);[m
+[32m+[m[32m    font-size: 2.2rem;[m[41m [m
+[32m+[m[32m    margin-bottom: 12px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.subtitle {[m
+[32m+[m[32m    font-size: 1rem;[m
+[32m+[m[32m    margin-bottom: 25px;[m
+[32m+[m[32m    color: #57606f;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.plant-image-container {[m
+[32m+[m[32m    background-color: #f1f9f1;[m
+[32m+[m[32m    height: 240px;[m
+[32m+[m[32m    border-radius: 6px;[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    align-items: center;[m
+[32m+[m[32m    justify-content: center;[m
+[32m+[m[32m    margin-bottom: 25px;[m
+[32m+[m[32m    overflow: hidden;[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.plant-img {[m
+[32m+[m[32m    width: auto;[m
+[32m+[m[32m    height: auto;[m
+[32m+[m[32m    max-width: 100%;[m
+[32m+[m[32m    max-height: 100%;[m
+[32m+[m[32m    display: block;[m
+[32m+[m[32m    object-fit: contain;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.link-action {[m
+[32m+[m[32m    display: inline-block;[m[41m [m
+[32m+[m[32m    color: var(--primary-green);[m
+[32m+[m[32m    text-decoration: underline;[m
+[32m+[m[32m    margin: 0;[m[41m [m
+[32m+[m[32m    font-size: 1.05rem;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.footer-note {[m
+[32m+[m[32m    margin-top: 50px;[m
+[32m+[m[32m    font-size: 0.9rem;[m
+[32m+[m[32m    color: #a4b0be;[m
+[32m+[m[32m    border-top: 1px solid #f1f2f6;[m
+[32m+[m[32m    padding-top: 20px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.catalog-list {[m
+[32m+[m[32m    display: block;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.catalog-card {[m
+[32m+[m[32m    border: 2px solid var(--primary-green);[m
+[32m+[m[32m    border-radius: 12px;[m
+[32m+[m[32m    padding: 16px;[m
+[32m+[m[32m    background: #ffffff;[m
+[32m+[m[32m    max-width: 500px;[m[41m [m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    margin-bottom: 20px;[m[41m [m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.catalog-card h3 {[m
+[32m+[m[32m    color: var(--primary-green);[m
+[32m+[m[32m    margin-bottom: 15px;[m
+[32m+[m[32m    font-size: 1.3rem;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.info-tag {[m
+[32m+[m[32m    background-color: var(--primary-green);[m
+[32m+[m[32m    color: white;[m
+[32m+[m[32m    padding: 12px;[m
+[32m+[m[32m    border-radius: 6px;[m
+[32m+[m[32m    font-weight: bold;[m
+[32m+[m[32m    font-size: 0.95rem;[m
+[32m+[m[32m    margin-bottom: 12px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.description-tag {[m
+[32m+[m[32m    background-color: var(--accent-yellow);[m
+[32m+[m[32m    color: #4a321a;[m
+[32m+[m[32m    padding: 12px;[m
+[32m+[m[32m    border-radius: 6px;[m
+[32m+[m[32m    font-size: 0.95rem;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mform {[m
+[32m+[m[32m    background: #ffffff;[m
+[32m+[m[32m    border: 1px solid var(--border-color);[m
+[32m+[m[32m    border-radius: 12px;[m
+[32m+[m[32m    padding: 25px;[m
+[32m+[m[32m    max-width: 420px;[m[41m [m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.form-group {[m
+[32m+[m[32m    margin-bottom: 20px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.form-group label {[m
+[32m+[m[32m    display: block;[m
+[32m+[m[32m    font-weight: bold;[m
+[32m+[m[32m    margin-bottom: 8px;[m
+[32m+[m[32m    font-size: 1rem;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.form-control,[m
+[32m+[m[32mform input[type="number"],[m
+[32m+[m[32mform input[type="text"],[m
+[32m+[m[32mform select,[m
+[32m+[m[32mform textarea {[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    padding: 12px;[m
+[32m+[m[32m    border: 1px solid var(--border-color);[m
+[32m+[m[32m    border-radius: 8px;[m
+[32m+[m[32m    font-size: 1rem;[m
+[32m+[m[32m    color: var(--text-dark);[m
+[32m+[m[32m    outline: none;[m
+[32m+[m[32m    background-color: #ffffff;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.form-control:focus,[m
+[32m+[m[32mform input[type="number"]:focus,[m
+[32m+[m[32mform input[type="text"]:focus,[m
+[32m+[m[32mform select:focus,[m
+[32m+[m[32mform textarea:focus {[m
+[32m+[m[32m    border-color: var(--primary-green);[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.request-form select,[m
+[32m+[m[32m.request-form input[type="number"],[m
+[32m+[m[32m.request-form textarea,[m
+[32m+[m[32mform select,[m
+[32m+[m[32mform input[type="number"],[m
+[32m+[m[32mform textarea {[m
+[32m+[m[32m  width: 100%;[m
+[32m+[m[32m  min-width: 0;[m
+[32m+[m[32m  max-width: 100%;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.form-note {[m
+[32m+[m[32m    font-size: 0.9rem;[m
+[32m+[m[32m    color: #7f8c8d;[m
+[32m+[m[32m    margin-bottom: 20px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.range-container {[m
+[32m+[m[32m    margin-top: 10px;[m
+[32m+[m[32m    margin-bottom: 20px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.range-slider,[m
+[32m+[m[32mform input[type="range"] {[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    accent-color: var(--primary-green);[m
+[32m+[m[32m    height: 6px;[m
+[32m+[m[32m    background: #dcdde1;[m
+[32m+[m[32m    border-radius: 3px;[m
+[32m+[m[32m    outline: none;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.range-labels {[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    justify-content: space-between;[m
+[32m+[m[32m    font-size: 0.9rem;[m
+[32m+[m[32m    color: #7f8c8d;[m
+[32m+[m[32m    margin-top: 8px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.checkbox-group {[m
+[32m+[m[32m    display: flex;[m
+[32m+[m[32m    align-items: center;[m
+[32m+[m[32m    gap: 10px;[m
+[32m+[m[32m    margin-bottom: 14px;[m
+[32m+[m[32m    cursor: pointer;[m
+[32m+[m[32m    font-size: 1rem;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.checkbox-group input {[m
+[32m+[m[32m    width: 20px;[m
+[32m+[m[32m    height: 20px;[m
+[32m+[m[32m    accent-color: var(--primary-green);[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.submit-btn,[m
+[32m+[m[32mform button,[m
+[32m+[m[32mform input[type="submit"] {[m
+[32m+[m[32m    width: 100%;[m
+[32m+[m[32m    max-width: 100%;[m
+[32m+[m[32m    background-color: var(--primary-green);[m
+[32m+[m[32m    color: white;[m
+[32m+[m[32m    border: 2px solid #1e5323;[m
+[32m+[m[32m    padding: 14px 24px;[m
+[32m+[m[32m    border-radius: 8px;[m
+[32m+[m[32m    font-weight: bold;[m
+[32m+[m[32m    font-size: 1.05rem;[m
+[32m+[m[32m    cursor: pointer;[m
+[32m+[m[32m    transition: background 0.2s;[m
+[32m+[m[32m    margin-top: 10px;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.submit-btn:hover,[m
+[32m+[m[32mform button:hover,[m
+[32m+[m[32mform input[type="submit"]:hover {[m
+[32m+[m[32m    background-color: #235e28;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mselect.form-control, form select {[m
+[32m+[m[32m    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232c3e50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E');[m
+[32m+[m[32m    background-repeat: no-repeat;[m
+[32m+[m[32m    background-position: right 12px top 50%;[m
+[32m+[m[32m    background-size: 12px auto;[m
+[32m+[m[32m    -webkit-appearance: none;[m
+[32m+[m[32m    -moz-appearance: none;[m
+[32m+[m[32m    appearance: none;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.products {[m
+[32m+[m[32m  display: flex;[m
+[32m+[m[32m  flex-wrap: wrap;[m
+[32m+[m[32m  gap: 1rem;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m.products > .card {[m
+[32m+[m[32m  flex: 1 1 16rem;[m
+[32m+[m[32m  min-width: 0;[m
+[32m+[m[32m  margin-bottom: 0;[m
+[32m+[m[32m  border: 2px solid var(--primary-green);[m
+[32m+[m[32m  border-radius: 12px;[m
+[32m+[m[32m  padding: 16px;[m
+[32m+[m[32m  background: #ffffff;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m#result {[m
+[32m+[m[32m    margin-top: 16px;[m
+[32m+[m[32m    font-weight: bold;[m
+[32m+[m[32m    color: var(--primary-green);[m
+[32m+[m[32m    font-size: 1rem;[m
+[32m+[m[32m    min-height: 1.4em;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m@media (max-width: 600px) {[m
+[32m+[m[32m  main.page {[m
+[32m+[m[32m    padding: 0.75rem;[m
+[32m+[m[32m  }[m
+[32m+[m[32m  .products > .card {[m
+[32m+[m[32m    flex-basis: 100%;[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
