@@ -8,13 +8,6 @@
   <meta name="theme-color" content="#2d7a34">
   <link rel="stylesheet" href="style.css">
 </head>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch((error) => {
-      console.error("Не удалось зарегистрировать service worker:", error);
-    });
-  }
-</script>
 <body>
   <header class="header-panel">
     Зелёный уголок · V17
@@ -43,5 +36,9 @@
   </main>
 
   <script src="catalog-page.js" defer></script>
-</body>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js");
+  }
+</script></body>
 </html>

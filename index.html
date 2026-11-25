@@ -9,13 +9,6 @@
   <link rel="stylesheet" href="style.css">
   <script src="catalog.js" defer></script>
 </head>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch((error) => {
-      console.error("Не удалось зарегистрировать service worker:", error);
-    });
-  }
-</script>
 <body>
   <header class="header-panel">
     Зелёный уголок · V17
@@ -29,7 +22,7 @@
 
    <main class="screen page">
     <h1>Зелёный уголок — каталог комнатных растений</h1>
-    <p>Учебная версия 1</p>
+    <p>Учебная версия 2</p>
     <p class="subtitle">Каталог неприхотливых комнатных растений для дома и офиса с рекомендациями по уходу</p>
 
     <!-- Элементы для выполнения задания -->
@@ -54,5 +47,10 @@
       Учебный прототип · Вариант 17
     </footer>
   </main>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./sw.js");
+  }
+</script>
 </body>
 </html>
